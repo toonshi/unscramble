@@ -21,7 +21,7 @@ private val _uiState = MutableStateFlow(GameUIState())
     private var usedWords: MutableSet<String> = mutableSetOf()
 
     private fun pickCurrentWordAndShuffle(): String {
-        val currentWord = allWords.random()
+        currentWord = allWords.random()
         if (usedWords.contains(currentWord)) {
             return pickCurrentWordAndShuffle()
         } else {
