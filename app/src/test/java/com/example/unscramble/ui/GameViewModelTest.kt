@@ -6,6 +6,7 @@ import com.example.unscramble.ui.GameViewModel
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
+import org.junit.Assert.assertNotEquals
 import org.junit.Test
 
 class GameViewModelTest {
@@ -33,6 +34,7 @@ class GameViewModelTest {
     companion object {
         private const val SCORE_AFTER_FIRST_CORRECT_ANSWER = SCORE_INCREASE
     }
+
     @Test
     fun gameViewModel_IncorrectGuess_ErrorFlagSet() {
         //for an incorrect word as input
@@ -47,5 +49,24 @@ class GameViewModelTest {
 
     }
 
+    @Test
+    fun gameViewModel_Initialization_FirstWordLoaded() {
+        val gameUiState = viewModel.uiState.value
+        val unScrambledWord = getUnscrambledWord(gameUiState.currentScrambledWord)
 
+        //Assert that the current word is scrambled
+        assertNotEquals(unScrambledWord, gameUiState.currentScrambledWord)
+
+        //Assert that the current word count is set to 1
+        assertEquals(1, gameUiState.currentWordCount)
+
+        //Assert that initially score is set to 0
+        assertEquals(0, gameUiState.score)
+
+        //Assert that the wrong word guessed flag is false
+        assertFalse(gameUiState.isGuessedWordWrong)
+
+        //Assert that game is not over
+        assertFalse(gameUiState.isGameOver)
+    }
 }
